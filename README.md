@@ -1,5 +1,7 @@
 # Movie Catalogue REST API · Hono
 
+[![CI](https://github.com/mgpavankumar/as5/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mgpavankumar/as5/actions/workflows/ci.yml)
+
 A movie HTTP API with validated metadata, ratings, and discovery routes.
 
 **Author:** [M. G. Pavan Kumar](https://github.com/mgpavankumar)
@@ -44,8 +46,8 @@ See [TEST_RESULTS.md](TEST_RESULTS.md) for recorded local verification and its l
 
 | Path | Purpose |
 | --- | --- |
-| `src/MovieService.ts` | Application logic and/or demonstration |
-| `src/app.ts` | Application logic and/or demonstration |
+| `src/MovieService.ts` | Movie catalogue, ratings, and discovery logic |
+| `src/app.ts` | HTTP application, routes, and request validation |
 | `src/index.ts` | Server entry point |
 | `tests/` | Automated regression checks |
 | `tsconfig.json` | Strict ESM compilation settings |
@@ -69,6 +71,16 @@ Records are held in memory and disappear when the process stops. This learning A
 | GET | `/movies/search` |
 | GET | `/movies` |
 | GET | `/movies/:id` |
+
+## Try the API
+
+```bash
+curl -i http://localhost:3000/movies -H 'Content-Type: application/json' -d '{"id":"demo-inception","title":"Inception","director":"Christopher Nolan","releaseYear":2010,"genre":"Sci-Fi"}'
+curl -i http://localhost:3000/movies/demo-inception/rating -H 'Content-Type: application/json' -d '{"rating":8}'
+curl -i http://localhost:3000/movies/demo-inception/rating
+```
+
+Expect HTTP 201 for creation and HTTP 200 for rating submission and retrieval. The average is 8; ratings outside 1–10 return 400. On Windows PowerShell use `curl.exe`.
 
 ## Contributing
 
