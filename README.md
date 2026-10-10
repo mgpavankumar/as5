@@ -85,3 +85,7 @@ Expect HTTP 201 for creation and HTTP 200 for rating submission and retrieval. T
 ## Contributing
 
 Keep changes focused, use synthetic data, and include steps or tests demonstrating the fix. Do not commit local configuration or credentials.
+
+## HTTP safeguards
+
+Requests are limited to 64 KiB and oversized payloads return JSON with HTTP 413. Responses include Hono security headers.

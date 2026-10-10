@@ -1,9 +1,13 @@
+import { bodyLimit } from 'hono/body-limit';
+import { secureHeaders } from 'hono/secure-headers';
 
 import { Hono } from "hono";
 import MovieDatabase from "./MovieService.js";
 
 export function createApp() {
 const app = new Hono();
+  app.use('*', secureHeaders());
+  app.use('*', bodyLimit({ maxSize: 64 * 1024, onError: c => c.json({ error: 'Request body exceeds 64 KiB' }, 413) }));
 const movieDatabase = new MovieDatabase();
 app.onError((error, c) => {
   if (error instanceof SyntaxError || error instanceof TypeError) return c.json({ error: "Invalid JSON request body" }, 400);
