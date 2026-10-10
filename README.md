@@ -1,6 +1,6 @@
 # Movie Catalogue REST API · Hono
 
-[![CI](https://github.com/mgpavankumar/as5/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mgpavankumar/as5/actions/workflows/ci.yml)
+[![CI](https://github.com/mgpavankumar/movie-catalogue-api/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mgpavankumar/movie-catalogue-api/actions/workflows/ci.yml)
 
 A movie HTTP API with validated metadata, ratings, and discovery routes.
 
@@ -18,8 +18,8 @@ A movie HTTP API with validated metadata, ratings, and discovery routes.
 Install Node.js 22 or newer and npm. Clone this repository:
 
 ```bash
-git clone https://github.com/mgpavankumar/as5.git
-cd as5
+git clone https://github.com/mgpavankumar/movie-catalogue-api.git
+cd movie-catalogue-api
 ```
 
 ```bash
