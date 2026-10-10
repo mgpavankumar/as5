@@ -1,4 +1,4 @@
-type Movie = {
+export type Movie = {
     id: string;
     title: string;
     director: string;
@@ -11,6 +11,9 @@ type Movie = {
     private movies: Map<string, Movie> = new Map();
   
     addMovie(id: string, title: string, director: string, releaseYear: number, genre: string): string {
+      if (![id, title, director, genre].every(value => typeof value === "string" && value.trim()) || !Number.isInteger(releaseYear) || releaseYear < 1888) {
+        throw new Error("Invalid movie details");
+      }
       if (this.movies.has(id)) {
         console.log("Movie ID already exists.");
         return "Movie ID already exists";
@@ -37,9 +40,8 @@ type Movie = {
         return;
       }
   
-      if (rating < 0 || rating > 10) {
-        console.log("Rating should be between 0 and 10.");
-        return;
+      if (!Number.isFinite(rating) || rating < 1 || rating > 10) {
+        throw new Error("Rating should be between 1 and 10.");
       }
   
       movie.rating.push(rating);
@@ -56,7 +58,8 @@ type Movie = {
     }
   
     getMovie(id: string): Movie | null {
-      return this.movies.get(id) || null;
+      const movie = this.movies.get(id);
+      return movie ? { ...movie, rating: [...movie.rating] } : null;
     }
   
     removeMovie(id: string): void {
@@ -68,7 +71,7 @@ type Movie = {
     }
   
     getTopRatedMovies(): Movie[] {
-      return Array.from(this.movies.values())
+      return this.getAllMovies()
         .filter((movie) => movie.rating.length > 0)
         .sort((a, b) => {
           const avgA = this.getAverageRating(a.id) || 0;
@@ -78,25 +81,25 @@ type Movie = {
     }
   
     getMoviesByGenre(genre: string): Movie[] {
-      return Array.from(this.movies.values()).filter(
+      return this.getAllMovies().filter(
         (movie) => movie.genre.toLowerCase() === genre.toLowerCase()
       );
     }
   
     getMoviesByDirector(director: string): Movie[] {
-      return Array.from(this.movies.values()).filter(
+      return this.getAllMovies().filter(
         (movie) => movie.director.toLowerCase() === director.toLowerCase()
       );
     }
   
     searchMoviesBasedOnKeyword(keyword: string): Movie[] {
-      return Array.from(this.movies.values()).filter((movie) =>
+      return this.getAllMovies().filter((movie) =>
         movie.title.toLowerCase().includes(keyword.toLowerCase())
       );
     }
   
     getAllMovies(): Movie[] {
-      return Array.from(this.movies.values());
+      return Array.from(this.movies.values(), movie => ({ ...movie, rating: [...movie.rating] }));
     }
   }
   
